@@ -18,12 +18,15 @@
 
 ### 手順
 - 1.リポジトリをクローンする
-- ```bash \ git clone <> \ cd <> ```
+- ```bash
+git clone <>
+cd <>
+
 
 
 - 2.環境変数ファイルを作成する
 - ```bash
-　cp .env.example .env
+cp .env.example .env
 
 - 3.composerパッケージをインストールする
 - ```bash
