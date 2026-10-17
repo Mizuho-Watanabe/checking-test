@@ -18,41 +18,41 @@
 
 ### 手順
 - 1.リポジトリをクローンする
-　'''bash
+　```bash
 　git clone <>
 　cd <>
-　'''
+　```
 - 2.環境変数ファイルを作成する
-　'''bash
+　```bash
 　cp .env.example .env
-　'''
+　```
 - 3.composerパッケージをインストールする
-　'''bash
+　```bash
 　docker run --rm \
     -u "$(id -u):$(id -g)" \
     -v "$(pwd):/var/www/html" \
     -w /var/www/html \
     laravelsail/php82-composer:latest \
     composer install
-　'''
+　```
 - 4.Sailを起動し、アプリケーションキーの生成とマイグレーションを行う
-　'''bash
+　```bash
 　./vendor/bin/sail up -d
 　./vendor/bin/sail artisan key:generate
 　./vendor/bin/sail migrate
-　'''
+　```
 - 5.依存パッケージのインストールと起動
-　'''bash
+　```bash
 　./vendor/bin/sail npm install
 　./vendor/bin/sail npm run dev
-　'''
+　```
 
 - 6.アプリケーションの起動
-　'''bash
+　```bash
 　npm run dev
-　'''
+　```
 - 7.動作確認
-ブラウザで'http://localhost'にアクセスし、画面が表示されることを確認
+ブラウザで`http://localhost`にアクセスし、画面が表示されることを確認
 
 ## 使用技術
 - Laravel 10
