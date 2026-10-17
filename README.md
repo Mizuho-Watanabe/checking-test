@@ -18,39 +18,39 @@
 
 ### 手順
 - 1.リポジトリをクローンする
-　```bash
-　git clone <>
-　cd <>
-　```
+- ```bash
+- git clone <>
+- cd <>
+- ```
 - 2.環境変数ファイルを作成する
-　```bash
-　cp .env.example .env
-　```
+- ```bash
+- cp .env.example .env
+- ```
 - 3.composerパッケージをインストールする
-　```bash
-　docker run --rm \
-    -u "$(id -u):$(id -g)" \
-    -v "$(pwd):/var/www/html" \
-    -w /var/www/html \
-    laravelsail/php82-composer:latest \
-    composer install
-　```
+- ```bash
+- docker run --rm \
+-    -u "$(id -u):$(id -g)" \
+-    -v "$(pwd):/var/www/html" \
+-    -w /var/www/html \
+-    laravelsail/php82-composer:latest \
+-    composer install
+- ```
 - 4.Sailを起動し、アプリケーションキーの生成とマイグレーションを行う
-　```bash
-　./vendor/bin/sail up -d
-　./vendor/bin/sail artisan key:generate
-　./vendor/bin/sail migrate
-　```
+- ```bash
+- ./vendor/bin/sail up -d
+- ./vendor/bin/sail artisan key:generate
+- ./vendor/bin/sail migrate
+- ```
 - 5.依存パッケージのインストールと起動
-　```bash
-　./vendor/bin/sail npm install
-　./vendor/bin/sail npm run dev
-　```
+- ```bash
+- ./vendor/bin/sail npm install
+- ./vendor/bin/sail npm run dev
+- ```
 
 - 6.アプリケーションの起動
-　```bash
-　npm run dev
-　```
+- ```bash
+- npm run dev
+- ```
 - 7.動作確認
 ブラウザで`http://localhost`にアクセスし、画面が表示されることを確認
 
