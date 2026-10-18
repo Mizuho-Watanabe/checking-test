@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class tag extends Model
+class Category extends Model
 {
     use HasFactory;
 
@@ -15,14 +15,14 @@ class tag extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'content',
     ];
 
     /**
-     * このtagを所有するcontactを取得
+     * このcategoryに属するcontactを取得
      */
-    public function contacts(): BelongsToMany
+    public function contacts(): HasMany
     {
-        return $this->belongsToMany(Contact::class);
+        return $this->hasMany(Contact::class);
     }
 }
