@@ -21,7 +21,7 @@ class Contact extends Model
         'gender',
         'email',
         'tel',
-        'adress',
+        'address',
         'building',
         'detail',
     ];
