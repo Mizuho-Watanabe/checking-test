@@ -14,7 +14,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $contacts = Contact::orderBy('created_at')->paginate(7);
+        $contacts = Contact::orderBy('id')->paginate(7);
         $categories = Category::orderBy('id')->get();
         $tags = Tag::orderBy('id')->get();
 
@@ -22,44 +22,23 @@ class AdminController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * 詳細表示
      */
-    public function create()
+    public function show(Contact $contact)
     {
-        //
+        $contact->load('category', 'tags');
+
+        return view('admin.show', compact('contact'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * 削除
      */
-    public function store(Request $request)
+    public function destroy(Contact $contact)
     {
-        //
-    }
+        $contact->delete();
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        $contact->load('category', 'tag');
-
-        return view('admin.show', compact('comtact', 'category', 'tag'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return redirect('/admin')
+            ->with('success', 'お問い合わせを削除しました');
     }
 }
