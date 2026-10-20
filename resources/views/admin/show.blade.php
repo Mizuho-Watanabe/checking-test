@@ -109,7 +109,7 @@
                     class="px-8 py-3 bg-[#7d7470] hover:bg-[#6b5f57] border border-transparent rounded font-medium text-white transition">
                     一覧に戻る
                 </a>
-                <form action="/admin/contacts/{{ $contact->id }}" method="post">
+                <form action="{{ route('admin.destroy', $contact) }}" method="post">
                     @csrf
                     @method('DELETE')
                     <button type="submit"

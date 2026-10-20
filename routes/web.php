@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\TagController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +30,9 @@ Route::get('/thanks', function() {
 
 Route::middleware('auth')->group(function () {
     //Adminのルート
-    Route::resource('admin', AdminController::class);
+    Route::resource('admin', AdminController::class)->parameters([
+        'admin' => 'contact'
+    ]);
 
     //タグのルート
     Route::resource('tags', TagController::class);
