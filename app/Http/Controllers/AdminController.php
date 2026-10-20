@@ -10,11 +10,10 @@ use App\Models\Category;
 class AdminController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * 管理者画面の表示(一覧表示)
      */
     public function index()
     {
-        //
         $contacts = Contact::orderBy('created_at')->paginate(7);
         $categories = Category::orderBy('id')->get();
         $tags = Tag::orderBy('id')->get();
@@ -43,15 +42,9 @@ class AdminController extends Controller
      */
     public function show(string $id)
     {
-        //
-    }
+        $contact->load('category', 'tag');
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+        return view('admin.show', compact('comtact', 'category', 'tag'));
     }
 
     /**
