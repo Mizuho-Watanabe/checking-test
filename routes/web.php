@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,3 +26,11 @@ Route::post('/contacts/confirm', [ContactController::class, 'store']);
 Route::get('/thanks', function() {
     return view('contact.thanks');
 })->name('contact.thanks');
+
+Route::middleware('auth')->group(function () {
+    //Adminのルート
+    Route::resource('admin', AdminController::class);
+
+    //タグのルート
+    Route::resource('tags', TagController::class);
+});
