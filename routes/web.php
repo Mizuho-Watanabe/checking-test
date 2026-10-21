@@ -22,7 +22,11 @@ use App\Http\Controllers\TagController;
 */
 
 Route::get('/', [ContactController::class, 'index']);
-Route::post('/contacts/confirm', [ContactController::class, 'store']);
+
+Route::get('/contacts/confirm', [ContactController::class, 'show']);
+Route::post('/contacts/confirm', [ContactController::class, 'show']);
+
+Route::post('/contacts', [ContactController::class, 'store']);
 
 Route::get('/thanks', function() {
     return view('contact.thanks');

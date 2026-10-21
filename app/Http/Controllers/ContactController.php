@@ -9,7 +9,7 @@ use App\Models\Contact;
 class ContactController extends Controller
 {
     /**
-     * フォーム画面
+     * フォーム画面の表示
      */
     public function index()
     {
@@ -17,13 +17,21 @@ class ContactController extends Controller
         return view('contact.index', compact('categories'));
     }
 
+    //お問い合わせの新規作成
     public function store(StoreContactRequest $request)
     {
         $validated = $request->validated();
 
         Contact::create($validated);
 
-        return redirect()->route('contact.thanks');
+        return redirect('/thanks');
+    }
 
+    //確認画面の表示
+    public function show(StoreContactRequest $request, Contact $contact, Category $category)
+    {
+        $validated = $request->validated();
+
+        return view('contact.confirm', compact('validated', 'category'));
     }
 }
