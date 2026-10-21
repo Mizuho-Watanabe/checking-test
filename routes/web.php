@@ -35,5 +35,7 @@ Route::middleware('auth')->group(function () {
     ]);
 
     //タグのルート
-    Route::resource('tags', TagController::class);
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::resource('tags', TagController::class);
+    });
 });
