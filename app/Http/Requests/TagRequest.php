@@ -23,7 +23,17 @@ class TagRequest extends FormRequest
     {
         return [
             //バリデーションルールに則る
-            'name' => 'required|string|max:50|unique',
+            'name' => 'required|string|max:50|unique:tags',
+        ];
+    }
+
+    public function messages(): array
+    {
+        //バリデーションメッセージ
+        return [
+            'name.required' => 'タグ名を入力してください。',
+            'name.max' => 'タグ名は50文字以内で入力してください。',
+            'name.unique' => 'そのタグ名は既に使用されています。',
         ];
     }
 }
