@@ -102,7 +102,7 @@
                                     @endif
                                 </td>
                                 <td class="px-6 py-4 text-sm">
-                                    <a href="/admin/contacts/{{ $contact->id }}"
+                                    <a href="{{ route('admin.show', $contact) }}"
                                         class="text-amber-600 hover:text-amber-800">詳細</a>
                                 </td>
                             </tr>
