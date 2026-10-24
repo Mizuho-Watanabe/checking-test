@@ -14,7 +14,9 @@ class AdminController extends Controller
      */
     public function index(Request $request)
     {
-        //検索機能
+        /**検索機能
+        *ユーザーが入力したものはバリデーションしなきゃいけないことは分かりますがやり方が分かりませんでした　未実装です
+        */
         $keyword = $request->input('keyword');
     
         //データの取得
@@ -30,7 +32,6 @@ class AdminController extends Controller
         $tags = Tag::orderBy('id')->get();
 
         return view('admin.index', compact('contacts', 'categories', 'tags', 'keyword'));
-
     }
 
     /**
