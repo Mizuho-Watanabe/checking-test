@@ -26,7 +26,7 @@ class ContactControllerTest extends TestCase
         $tag = Tag::factory()->create();
 
         // Act
-        $response = $this->post('/contact', [
+        $response = $this->post('/contacts', [
             'category_id' => Category::inRandomOrder()->value('id'),
             'first_name' => fake()->name(),
             'last_name' => fake()->name(),
@@ -38,7 +38,7 @@ class ContactControllerTest extends TestCase
             'detail' => fake()->sentence(),
             'updated_at' => now(),
             'created_at' => now(),
-            'tag_id' => Tag::inRandomOrder()->value('id'),
+            'tags_id' => Tag::inRandomOrder()->value('id'),
         ]);
 
         //Assert
@@ -49,7 +49,7 @@ class ContactControllerTest extends TestCase
     public function test_tel_cannotinput(): void
     {
         //Arrange・Act
-         $response = $this->post('contact.confirm', [
+         $response = $this->post('/contacts', [
             'tel' => fake()->numerify('1~9,##########'),
          ]);
 
