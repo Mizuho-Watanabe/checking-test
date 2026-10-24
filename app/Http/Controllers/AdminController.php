@@ -20,11 +20,25 @@ class AdminController extends Controller
         $keyword = $request->input('keyword');
     
         //データの取得
-        $contacts = Contact::when($keyword, function ($query, $keyword) {
+        $contacts = Contact::query()
+            //キーワード検索
+            ->when($keyword, function ($query, $keyword) {
             return $query->where('first_name', 'like', "%{$keyword}%")
                 ->orwhere('last_name', 'like', "%{$keyword}%")
                 ->orwhere('email', 'like', "%{$keyword}%");
-        })
+            })
+            //性別フィルター
+            ->when($request->filled('gender'), function ($query) use ($request) {
+                $query->where('gender', $request->input('gender'));
+            })
+            //カテゴリーフィルター
+            ->when($request->filled('category_id'), function ($query) use ($request) {
+                $query->where('category_id', $request->input('category_id'));
+            })
+            //日付フィルター
+            ->when($request->filled('date'), function ($query) use ($request) {
+                $query->whereDate('created_at', $request->input('date'));
+            })
         ->orderBy('id')
         ->paginate(7);
         
