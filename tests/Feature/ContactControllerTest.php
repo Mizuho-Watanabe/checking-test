@@ -26,7 +26,7 @@ class ContactControllerTest extends TestCase
         $tag = Tag::factory()->create();
 
         // Act
-        $response = $this->post(route('contact.confirm'), [
+        $response = $this->post('/contact', [
             'category_id' => Category::inRandomOrder()->value('id'),
             'first_name' => fake()->name(),
             'last_name' => fake()->name(),
@@ -36,18 +36,20 @@ class ContactControllerTest extends TestCase
             'address' => fake()->address(),
             'building' => fake()->text(30),
             'detail' => fake()->sentence(),
-            'contact_id' => Tag::inRandomOrder()->value('id'),
+            'updated_at' => now(),
+            'created_at' => now(),
+            'tag_id' => Tag::inRandomOrder()->value('id'),
         ]);
 
         //Assert
-        $response->assertStatus(200);
+        $response->assertRedirect(route('contact.thanks'));
     }
 
     //不正な電話番号形式は拒否すること
     public function test_tel_cannotinput(): void
     {
         //Arrange・Act
-         $response = $this->post(route('contact.confirm'), [
+         $response = $this->post('contact.confirm', [
             'tel' => fake()->numerify('1~9,##########'),
          ]);
 
