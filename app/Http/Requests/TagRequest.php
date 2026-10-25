@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class TagRequest extends FormRequest
 {
@@ -21,9 +22,17 @@ class TagRequest extends FormRequest
      */
     public function rules(): array
     {
+        //編集中のタグidを取得
+            $tagId = $this->route('tag');
+            
         return [
             //バリデーションルールに則る
-            'name' => 'required|string|max:50|unique:tags',
+            'name' => [
+                'required',
+                'string',
+                'max:50',
+                Rule::unique('tags','name')->ignore($tagId),
+                ],
         ];
     }
 

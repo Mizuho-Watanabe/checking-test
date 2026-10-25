@@ -24,7 +24,8 @@ use App\Http\Controllers\TagController;
 Route::get('/', [ContactController::class, 'index']);
 
 Route::get('/contacts/confirm', [ContactController::class, 'show']);
-Route::post('/contacts/confirm', [ContactController::class, 'show']);
+Route::post('/contacts/confirm', [ContactController::class, 'show'])
+    ->name('contact.confirm');
 
 Route::post('/contacts', [ContactController::class, 'store']);
 
