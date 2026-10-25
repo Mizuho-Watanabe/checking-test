@@ -23,7 +23,6 @@ class AdminController extends Controller
             'category_id' => 'nullable|int|exists:categories,id',
             'date' => 'nullable|date',
         ]);
-        
     
         //データの取得
         $keyword = $request->input('keyword');
