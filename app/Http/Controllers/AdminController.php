@@ -15,32 +15,42 @@ class AdminController extends Controller
     public function index(Request $request)
     {
         /**検索機能
-        *ユーザーが入力したものはバリデーションしなきゃいけないことは分かりますがやり方が分かりませんでした　未実装です
+        *
         */
-        $keyword = $request->input('keyword');
+        $validated = $request->validate([
+            'keyword' => 'nullable|string',
+            'gender' => 'nullable|int|in:0,1,2,3',
+            'category_id' => 'nullable|int|exists:categories,id',
+            'date' => 'nullable|date',
+        ]);
+        
     
         //データの取得
+        $keyword = $request->input('keyword');
         $contacts = Contact::query()
             //キーワード検索
-            ->when($keyword, function ($query, $keyword) {
-            return $query->where('first_name', 'like', "%{$keyword}%")
+            ->when($validated['keyword'] ?? null, function ($query, $keyword) {
+                $query->where(function ($q) use ($keyword) {
+                $q->where('first_name', 'like', "%{$keyword}%")
                 ->orwhere('last_name', 'like', "%{$keyword}%")
                 ->orwhere('email', 'like', "%{$keyword}%");
+                });
             })
             //性別フィルター
-            ->when($request->filled('gender'), function ($query) use ($request) {
-                $query->where('gender', $request->input('gender'));
+            ->when($validated['gender'] ?? null, function ($query, $gender) {
+                $query->where('gender', $gender);
             })
             //カテゴリーフィルター
-            ->when($request->filled('category_id'), function ($query) use ($request) {
-                $query->where('category_id', $request->input('category_id'));
+            ->when($validated['category_id'] ?? null, function ($query, $categoryId) {
+                $query->where('category_id', $categoryId);
             })
             //日付フィルター
-            ->when($request->filled('date'), function ($query) use ($request) {
-                $query->whereDate('created_at', $request->input('date'));
+            ->when($validated['date'] ?? null, function ($query, $date) {
+                $query->whereDate('created_at', $date);
             })
         ->orderBy('id')
         ->paginate(7);
+
         
         $categories = Category::orderBy('id')->get();
         $tags = Tag::orderBy('id')->get();
