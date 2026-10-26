@@ -122,4 +122,75 @@ class AdminControllerTest extends TestCase
         //Assert
         $response->assertSessionHasErrors('gender');
     }
+
+    /**
+     * ページネーションテスト
+     */
+
+    //1ページに7件か
+    public function test_pagenation_displays_correct_number_of_items(): void
+    {
+        //Arrange
+        $user = User::factory()->create();
+        $category = Category::create([
+            'content' => 'テストカテゴリー',
+            'updated_at' => now(),
+            'created_at' => now(),
+        ]);
+        $contacts = Contact::factory()->count(8)->create();
+
+        //Act
+        $response = $this->actingAs($user)->get('/admin');
+
+        //Assert
+        $response->assertStatus(200)
+            ->assertSee('詳細');
+        $this->assertEquals(7, $response->viewData('contacts')->count());
+    }
+
+    // 2ページ目にアクセス
+    public function test_pagination_handles_last_page_correctly()
+    {
+        //Arrange
+        $user = User::factory()->create();
+        $category = Category::create([
+            'content' => 'テストカテゴリー',
+            'updated_at' => now(),
+            'created_at' => now(),
+        ]);
+        $contacts = Contact::factory()->count(8)->create();
+
+        //Act
+        $response = $this->actingAs($user)->get('/admin?page=2');
+
+        $response->assertStatus(200);
+        $this->assertEquals(1, $response->viewData('contacts')->count());
+    }
+
+    /**
+     * 管理機能テスト
+     */
+
+    //詳細ページ表示
+    public function test_admin_show(): void
+    {
+        // Arrange
+        $user = User::factory()->create();
+        $category = Category::create([
+            'content' => 'テストカテゴリー',
+            'updated_at' => now(),
+            'created_at' => now(),
+        ]);
+        Contact::factory()->create([
+            'id' => '1'
+         ]);
+
+        // Act
+        $response = $this->actingAs($user)->get('/admin/1');
+
+        // Assert
+        $response->assertStatus(200);
+        $response->assertViewIs('admin.show');
+        $response->assertSee('テストカテゴリー');
+    }
 }
