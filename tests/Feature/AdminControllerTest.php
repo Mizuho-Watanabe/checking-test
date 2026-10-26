@@ -14,8 +14,10 @@ class AdminControllerTest extends TestCase
     use RefreshDatabase;
 
     /**
-     * キーワードフィルタが有効か
+     * お問い合わせ一覧検索テスト
      */
+
+    //キーワードフィルタが有効か
     public function test_keyword_filter(): void
     {
         //Arrange
@@ -37,9 +39,7 @@ class AdminControllerTest extends TestCase
         $response->assertDontSee('other@testsample.com');
     }
 
-    /**
-     * 性別フィルタが有効か
-     */
+    // 性別フィルタが有効か
     public function test_gender_filter(): void
     {
         //Arrange
@@ -61,9 +61,7 @@ class AdminControllerTest extends TestCase
         $response->assertDontSee('other@testsample.com');
     }
 
-    /**
-     * カテゴリーフィルタが有効か
-     */
+    // カテゴリーフィルタが有効か
     public function test_category_filter(): void
     {
         //Arrange
@@ -92,9 +90,7 @@ class AdminControllerTest extends TestCase
         $response->assertDontSee('other@testsample.com');
     }
 
-    /**
-     * 日付フィルタが有効か
-     */
+    // 日付フィルタが有効か
     public function test_data_filter(): void
     {
         //Arrange
