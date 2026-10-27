@@ -193,4 +193,26 @@ class AdminControllerTest extends TestCase
         $response->assertViewIs('admin.show');
         $response->assertSee('テストカテゴリー');
     }
+
+    //レコード削除
+    public function test_contact_delete(): void
+    {
+        // Arrange
+        $user = User::factory()->create();
+        $category = Category::create([
+            'content' => 'テストカテゴリー',
+            'updated_at' => now(),
+            'created_at' => now(),
+        ]);
+        Contact::factory()->create([
+            'id' => '1'
+         ]);
+
+        // Act
+        $response = $this->actingAs($user)->delete('/admin/1');
+
+        // Assert
+        $response->assertRedirect('/admin');
+        $this->assertDatabaseMissing('contacts', ['id' => 1]);
+    }
 }
